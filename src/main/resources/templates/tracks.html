@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>View Tracks</title>
+</head>
+<body>
+	<h1>View Tracks</h1>
+	
+	<table>
+		<tr>
+			<th>Track Name</th>
+		</tr>
+		<tr th:each="track : ${tracks}">
+			<td>[[${track.trackName}]]</td>
+		</tr>
+	</table>
+
+</body>
+</html>
