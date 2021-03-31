@@ -27,5 +27,6 @@ public class Track {
 	private String album;
 	private String imgUrl;
 	
-	private int labelId;
+	@ManyToOne(cascade=CascadeType.ALL)
+	private Label label;
 }
