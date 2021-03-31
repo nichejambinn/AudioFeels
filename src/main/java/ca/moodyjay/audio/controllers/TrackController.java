@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import ca.moodyjay.audio.beans.Track;
+import ca.moodyjay.audio.repositories.LabelRepository;
 import ca.moodyjay.audio.repositories.TrackRepository;
 
 @Controller
@@ -14,6 +16,9 @@ public class TrackController {
 
 	@Autowired
 	private TrackRepository trackRepo;
+	
+	@Autowired
+	private LabelRepository labelRepo;
 	
 	@GetMapping("/")
 	public String goHome() {
@@ -23,6 +28,7 @@ public class TrackController {
 	@GetMapping("/tracks")
 	public String goTracks(Model model) {
 		model.addAttribute("tracks", trackRepo.findAll());
+		model.addAttribute("labels", labelRepo.findAll());
 		return "tracks.html";
 	}
 	
@@ -46,6 +52,14 @@ public class TrackController {
 						.build();
 		
 		trackRepo.save(track);
+		
+		return "redirect:/tracks";
+	}
+	
+	@GetMapping("/deleteTrack/{id}")
+	public String deleteTrack(@PathVariable String id) {
+		Track track = trackRepo.findById(id).get();
+		trackRepo.delete(track);
 		
 		return "redirect:/tracks";
 	}

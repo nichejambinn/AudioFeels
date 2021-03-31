@@ -6,15 +6,34 @@
 </head>
 <body>
 	<h1>View Tracks</h1>
-	
-	<table>
-		<tr>
-			<th>Track Name</th>
-		</tr>
-		<tr th:each="track : ${tracks}">
-			<td>[[${track.trackName}]]</td>
-		</tr>
-	</table>
-
+		<table>
+			<tr>
+				<th>Album Art</th>
+				<th>Track Name</th>
+				<th>Artist</th>
+				<th>Album</th>
+				<th>Mood</th>
+				<th>Set Mood</th>
+				<th></th>
+				<th></th>
+			</tr>
+			<tr th:each="track : ${tracks}">
+				<td><img th:src="${track.imgUrl}" style="height: 100px" /></td>
+				<td th:text="${track.trackName}"></td>
+				<td th:text="${track.artist}"></td>
+				<td th:text="${track.album}"></td>
+				<td>
+					<span th:if="${track.label != null}" th:text="${track.label.mood}"></span>
+					<span th:unless="${track.label == null}"></span>
+				</td>
+				<td>
+					<select>
+						<option th:each="label : ${labels}" value="label.id" th:text="${label.mood}"></option>
+					</select>
+				</td>
+				<td><a>SAVE</a></td>
+				<td><a th:href="@{/deleteTrack/{id}(id=${track.spotifyId})}">DELETE</a></td>
+			</tr>
+		</table>
 </body>
 </html>
