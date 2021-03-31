@@ -27,7 +27,7 @@ public class TrackController {
 	
 	@GetMapping("/tracks")
 	public String goTracks(Model model) {
-		model.addAttribute("tracks", trackRepo.findAll());
+		model.addAttribute("tracks", trackRepo.findAllByOrderByTrackNameAsc());
 		model.addAttribute("labels", labelRepo.findAll());
 		return "tracks.html";
 	}
