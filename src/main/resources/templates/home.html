@@ -9,9 +9,15 @@
 <body>
 	<h1>Audio Feels</h1>
 	
+	<div sec:authorize="isAuthenticated()">
+	    Hey <span sec:authentication="name"></span><br>
+	    You're logged in as <span sec:authentication="principal.authorities"></span><br>
+	    <br>
+  </div>
+	
 	<div th:if="${param.logout}">
       <span class="alert">You have been logged out</span>
-  </div>
+  	</div>
 	
 	<a th:href="@{/tracks}">View Tracks</a>
 	

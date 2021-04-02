@@ -2,6 +2,7 @@ package ca.moodyjay.audio.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// define our url constraints for specific roles
 			// we constrain urls not htmls
 			.antMatchers("/tracks").hasRole("ADMIN")
+			
+			.antMatchers(HttpMethod.POST, "/deleteTrack/**").hasRole("ADMIN")
+			.antMatchers(HttpMethod.POST, "/saveTrackLabel/{id:\\w+}").hasRole("ADMIN")
 			
 			// everyone has access without login, constraints take priority
 			.antMatchers("/", "/css/**", "/images/**", "/js/**", "/**").permitAll()

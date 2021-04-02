@@ -4,10 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.*;
 
 import ca.moodyjay.audio.beans.Track;
+import ca.moodyjay.audio.beans.TrackForm;
 import ca.moodyjay.audio.repositories.LabelRepository;
 import ca.moodyjay.audio.repositories.TrackRepository;
 
@@ -27,7 +32,11 @@ public class TrackController {
 	
 	@GetMapping("/tracks")
 	public String goTracks(Model model) {
-		model.addAttribute("tracks", trackRepo.findAllByOrderByTrackNameAsc());
+		
+		TrackForm trackForm = new TrackForm();
+		trackForm.setTracks((ArrayList<Track>)trackRepo.findAllByOrderByTrackNameAsc());
+		
+		model.addAttribute("trackForm", trackForm);
 		model.addAttribute("labels", labelRepo.findAll());
 		return "tracks.html";
 	}
@@ -56,10 +65,20 @@ public class TrackController {
 		return "redirect:/tracks";
 	}
 	
-	@GetMapping("/deleteTrack/{id}")
+	@PostMapping("/saveTrackLabel/{id}")
+	public String saveTrackLabel(@PathVariable String id, @ModelAttribute TrackForm trackForm) {
+		Track track = trackForm.getTracks().stream().filter(t -> t.getSpotifyId().equals(id)).findFirst().orElse(null);
+		if (track != null) {
+			System.out.println(track.getLabel().getMood());
+		}
+		
+		return "redirect:/tracks";
+	}
+	
+	@PostMapping("/deleteTrack/{id}")
 	public String deleteTrack(@PathVariable String id) {
-		Track track = trackRepo.findById(id).get();
-		trackRepo.delete(track);
+		Optional<Track> trackQuery = trackRepo.findById(id);
+		if (trackQuery.isPresent()) trackRepo.delete(trackQuery.get());
 		
 		return "redirect:/tracks";
 	}
