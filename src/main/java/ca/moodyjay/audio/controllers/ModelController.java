@@ -19,14 +19,13 @@ public class ModelController {
 	@GetMapping("/model")
 	public String goModel(Model model, RestTemplate restTemplate) {
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();        
-		//Add the Jackson Message converter
+		
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 
-		// Note: here we are making this converter to process any kind of response, 
-		// not only application/*json, which is the default behaviour
 		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));        
 		messageConverters.add(converter);  
 		restTemplate.setMessageConverters(messageConverters); 
+		
 		ResponseEntity<String[]> responseEntity = restTemplate.getForEntity(
 				"http://localhost:5000/get_accuracy_k_value", String[].class);
 		
