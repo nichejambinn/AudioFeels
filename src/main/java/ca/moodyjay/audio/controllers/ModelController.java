@@ -29,14 +29,27 @@ public class ModelController {
 		ResponseEntity<String[]> responseEntity = restTemplate.getForEntity(
 				"http://localhost:5000/get_accuracy_k_value", String[].class);
 		
-		ResponseEntity<String> responseEntity2 = restTemplate.getForEntity(
-				"http://localhost:5000/get_num_points", String.class);
-		
 		model.addAttribute("accuracy", responseEntity.getBody()[0]);
 		model.addAttribute("k", responseEntity.getBody()[1]);
 		
-		model.addAttribute("numPoints", responseEntity2.getBody());
-		
 		return "model.html";
+	}
+	
+	@GetMapping("/data")
+	public String goData(Model model, RestTemplate restTemplate) {
+		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();        
+		
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+
+		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));        
+		messageConverters.add(converter);  
+		restTemplate.setMessageConverters(messageConverters); 
+		
+		ResponseEntity<String> responseEntity = restTemplate.getForEntity(
+				"http://localhost:5000/get_num_points", String.class);
+		
+		model.addAttribute("numPoints", responseEntity.getBody());
+		
+		return "data.html";
 	}
 }
