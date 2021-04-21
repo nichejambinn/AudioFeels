@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Analytics</title>
+</head>
+<body>
+	<h1>Analytics</h1>
+	<div>
+		<h3>KNN Classifier</h3>
+		<ul>
+			<li th:text="'test set accuracy: ' + ${accuracy} + '%'"></li>
+			<li th:text="'k: ' + ${k}"></li>
+		</ul>
+		<div>
+			<img src="#" 
+				alt="Test/Train Performance"
+				th:src="@{http://localhost:5000/get_image}"
+			>
+		</div>
+	</div>
+	
+	<div>
+		<h3>Data</h3>
+		<ul>
+			<li th:text="'number of data points: ' + ${numPoints}"></li>
+		</ul>
+		<div>
+			<img src="#"
+				alt="Pairwise Plots"
+				th:src="@{http://localhost:5000/get_image_2}"
+			>
+		</div>
+	</div>
+	<a href="#" th:href="@{/}">Home</a>
+</body>
+</html>
