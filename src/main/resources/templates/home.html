@@ -18,13 +18,11 @@
 	<div th:if="${param.logout}">
       <span class="alert">You have been logged out</span>
   	</div>
-	
+
 	<a th:href="@{/tracks}">View Tracks</a><br>
 	<a th:href="@{/model}">View Analytics</a><br>
-	<a th:href="@{/data}">View Data</a>
-	
-	<form th:action="@{/tracks}" method="post">
-		<button type="submit">Add Test Track</button>
-	</form>
+	<a th:href="@{/data}">View Data</a><br>
+	<br>
+	<a th:href="@{/search}">Search Tracks</a><br>
 </body>
 </html>
