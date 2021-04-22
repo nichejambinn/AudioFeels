@@ -24,8 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			// define our url constraints for specific roles
 			// we constrain urls not htmls
-			.antMatchers("/tracks").hasRole("ADMIN")
+			.antMatchers("/tracks").hasRole("ADMIN") // allows all HttpMethods
 			.antMatchers("/model").hasRole("ADMIN")
+			.antMatchers("/data").hasRole("ADMIN")
+				
 			.antMatchers(HttpMethod.POST, "/deleteTrack/**").hasRole("ADMIN")
 			.antMatchers(HttpMethod.POST, "/saveTrackLabel/{id:\\w+}").hasRole("ADMIN")
 			

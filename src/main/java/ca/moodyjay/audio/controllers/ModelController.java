@@ -27,7 +27,7 @@ public class ModelController {
 		restTemplate.setMessageConverters(messageConverters); 
 		
 		ResponseEntity<String[]> responseEntity = restTemplate.getForEntity(
-				"http://localhost:5000/get_accuracy_k_value", String[].class);
+				"https://moodyjay.herokuapp.com/get_accuracy_k_value", String[].class);
 		
 		model.addAttribute("accuracy", responseEntity.getBody()[0]);
 		model.addAttribute("k", responseEntity.getBody()[1]);
@@ -46,7 +46,7 @@ public class ModelController {
 		restTemplate.setMessageConverters(messageConverters); 
 		
 		ResponseEntity<String> responseEntity = restTemplate.getForEntity(
-				"http://localhost:5000/get_num_points", String.class);
+				"https://moodyjay.herokuapp.com/get_num_points", String.class);
 		
 		model.addAttribute("numPoints", responseEntity.getBody());
 		

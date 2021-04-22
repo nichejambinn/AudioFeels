@@ -44,7 +44,7 @@ public class TrackController {
 	@PostMapping("/tracks")
 	public String addTrack() {
 		Track track = Track.builder()
-						.spotifyId("TESTESTESTEST")
+						.spotifyId("TESTESTESTEST4")
 						.acousticness(0)
 						.album("DELETEME")
 						.artist("I LONG FOR THE RELEASE OF THE GREAT DELETE")
@@ -67,9 +67,20 @@ public class TrackController {
 	
 	@PostMapping("/saveTrackLabel/{id}")
 	public String saveTrackLabel(@PathVariable String id, @ModelAttribute TrackForm trackForm) {
+		// retrieve track with matching id from track form list
 		Track track = trackForm.getTracks().stream().filter(t -> t.getSpotifyId().equals(id)).findFirst().orElse(null);
 		if (track != null) {
-			System.out.println(track.getLabel().getMood());
+			int labelId = track.getLabel().getId();
+			
+			// find track in db
+			Optional<Track> trackQuery = trackRepo.findById(id);
+			if (trackQuery.isPresent()) {
+				track = trackQuery.get();
+				
+				// update label and save to db
+				track.setLabel(labelRepo.findById(labelId).get());
+				trackRepo.save(track);
+			}
 		}
 		
 		return "redirect:/tracks";

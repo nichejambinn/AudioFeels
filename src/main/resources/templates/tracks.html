@@ -8,7 +8,7 @@
 <body>
 	<h1>View Tracks</h1>
 	
-	<form method="post" th:object="${trackForm}">
+	<form th:action="@{/}" method="post" th:object="${trackForm}">
 		<table class="table">
 			<tr>
 				<th>Album Art</th>
@@ -38,9 +38,6 @@
 					<button type="submit" th:formaction="@{/saveTrackLabel/{id}(id=${track.spotifyId})}">SAVE</button>
 					<button type="submit" th:formaction="@{/deleteTrack/{id}(id=${track.spotifyId})}">DELETE</button>
 				</td>
-			</tr>
-			<tr>
-				<td><a>ADD SONG</a></td>
 			</tr>
 		</table>
 	</form>
