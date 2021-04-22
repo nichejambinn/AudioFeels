@@ -1,28 +1,22 @@
 <!DOCTYPE html>
-<html
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="ISO-8859-1" />
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Access Denied</title>
         <link rel="stylesheet" th:href="@{/css/global.css}" />
+        <title>Access Denied</title>
     </head>
     <body>
         <div th:replace="fragments/header :: header"></div>
-        <h1>Access Denied</h1>
-        <h2>You do not have permission to access this page</h2>
-
-        <a th:href="@{/}">Home</a><br />
-        <br />
-
-        <div sec:authorize="isAuthenticated()">
-            <div>
-                <form th:action="@{/logout}" method="post">
-                    <input type="submit" value="Logout" />
-                </form>
-            </div>
+        <div class="container">
+            <article class="message is-danger mt-5">
+                <div class="message-header">
+                    <p>Access Denied</p>
+                    <button class="delete" aria-label="delete"></button>
+                </div>
+                <div class="message-body">You do not have permission to access this page.</div>
+            </article>
         </div>
     </body>
 </html>
