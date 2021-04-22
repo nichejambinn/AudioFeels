@@ -22,10 +22,10 @@
     </a>
     <div id="navMenu" class="navbar-menu">
         <div class="navbar-end">
-            <a sec:authorize="hasRole('ROLE_PROF')" class="navbar-item" href="/"> Home </a>
-            <a sec:authorize="hasRole('ROLE_PROF')" class="navbar-item" href="/students">
-                Students
-            </a>
+            <a class="navbar-item" th:href="@{/tracks}"> Tracks </a>
+            <a class="navbar-item" th:href="@{/model}"> Analytics </a>
+            <a class="navbar-item" th:href="@{/data}"> Data </a>
+            <a class="navbar-item" th:href="@{/search}"> Search </a>
 
             <div class="navbar-item has-dropdown is-hoverable" sec:authorize="isAuthenticated()">
                 <a class="navbar-link"> <span sec:authentication="name"></span> </a>
@@ -35,6 +35,9 @@
                         <a class="navbar-item" href="/logout"> Logout </a>
                     </form>
                 </div>
+            </div>
+            <div class="navbar-item" sec:authorize="!isAuthenticated()">
+                <a class="navbar-item" href="/login"> Login </a>
             </div>
         </div>
     </div>
