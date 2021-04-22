@@ -19,4 +19,7 @@ public class Label {
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="label")
 	private List<Track> tracks;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="label")
+	private List<Rating> ratings;
 }

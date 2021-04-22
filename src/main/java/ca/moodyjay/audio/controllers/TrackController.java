@@ -1,6 +1,7 @@
 package ca.moodyjay.audio.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.*;
 
-import ca.moodyjay.audio.beans.Track;
-import ca.moodyjay.audio.beans.TrackForm;
-import ca.moodyjay.audio.repositories.LabelRepository;
-import ca.moodyjay.audio.repositories.TrackRepository;
+import ca.moodyjay.audio.beans.*;
+import ca.moodyjay.audio.repositories.*;
 
 @Controller
 public class TrackController {
@@ -23,6 +22,12 @@ public class TrackController {
 	
 	@Autowired
 	private LabelRepository labelRepo;
+	
+	@Autowired
+	private RatingRepository ratingRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 	
 	@GetMapping("/")
 	public String goHome() {
@@ -42,23 +47,6 @@ public class TrackController {
 	
 	@PostMapping("/tracks")
 	public String addTrack(@ModelAttribute Track track) {
-//		Track track = Track.builder()
-//						.spotifyId("TESTESTESTEST4")
-//						.acousticness(0)
-//						.album("DELETEME")
-//						.artist("I LONG FOR THE RELEASE OF THE GREAT DELETE")
-//						.danceability(0)
-//						.energy(0)
-//						.imgUrl("http://www.DELETEME.com")
-//						.instrumentalness(0)
-//						.liveness(0)
-//						.loudness(0)
-//						.speechiness(0)
-//						.tempo(0)
-//						.trackName("TEST TO BE REMOVED GET UP YOU MIGHT GET DOWN WITH THE SICKNESS")
-//						.trackKey(0)
-//						.build();
-		
 		trackRepo.save(track);
 		
 		return "redirect:/tracks";
@@ -88,8 +76,42 @@ public class TrackController {
 	@PostMapping("/deleteTrack/{id}")
 	public String deleteTrack(@PathVariable String id) {
 		Optional<Track> trackQuery = trackRepo.findById(id);
-		if (trackQuery.isPresent()) trackRepo.delete(trackQuery.get());
+		if (trackQuery.isPresent()) {
+			trackRepo.delete(trackQuery.get());
+		}
 		
 		return "redirect:/tracks";
+	}
+	
+	@PostMapping("/rateTrack")
+	public String rateTrack(@ModelAttribute Track track, Authentication auth) {
+		Label label = labelRepo.findById(track.getLabel().getId()).get();
+		Optional<Track> trackQuery = trackRepo.findById(track.getSpotifyId());
+		
+		// assign the label to the track if added by admin
+		if (auth != null && auth.getName().toUpperCase().equals("ADMIN")) {
+			track.setLabel(label);
+		} else {
+			track.setLabel(null);
+		}
+		
+		// save track in database if not already there
+		track.setLabel(null);
+		if (trackQuery.isPresent()) {
+			track = trackQuery.get();
+		} else {
+			trackRepo.save(track);
+		}
+		
+		// save as rating if admin didn't one to label
+		if (auth == null || !auth.getName().toUpperCase().equals("ADMIN")) {
+			ratingRepo.save(Rating.builder()
+					.label(label)
+					.track(track)
+					.user((auth != null) ? userRepo.findByUsername(auth.getName()) : null)
+					.build());
+		}
+		
+		return "redirect:/search";
 	}
 }

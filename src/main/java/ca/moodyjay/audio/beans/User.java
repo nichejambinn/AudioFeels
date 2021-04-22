@@ -1,5 +1,7 @@
 package ca.moodyjay.audio.beans;
 
+import java.util.List;
+
 import javax.persistence.*;
 import lombok.*;
 
@@ -20,4 +22,7 @@ public class User {
 
 	@ManyToOne(cascade = CascadeType.ALL) // , fetch=FetchType.EAGER)
 	private Role role;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+	private List<Rating> ratings;
 }

@@ -1,5 +1,7 @@
 package ca.moodyjay.audio.beans;
 
+import java.util.List;
+
 import javax.persistence.*;
 import lombok.*;
 
@@ -27,6 +29,10 @@ public class Track {
 	private String album;
 	private String imgUrl;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	private Label label;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="track")
+	private List<Rating> ratings;
+	
 }
