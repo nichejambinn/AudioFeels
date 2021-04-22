@@ -9,9 +9,24 @@
         <link rel="stylesheet" th:href="@{/css/global.css}" />
     </head>
     <body>
-        <div th:replace="fragments/header :: header"></div>
-        <div class="container">
-            <h1>Home Page</h1>
+        <div
+            class="container has-text-centered is-flex is-justify-content-center is-align-items-center"
+        >
+            <div>
+                <h1 class="title">Audio Feels</h1>
+                <!-- User not logged in -->
+                <div sec:authorize="!isAuthenticated()">
+                    <p class="is-size-5 mb-3">Please sign in to view the dashboard 👇</p>
+                    <a href="/login" class="button is-black is-medium">Sign In</a>
+                </div>
+                <!-- User logged in -->
+                <div sec:authorize="isAuthenticated()">
+                    <p class="is-size-5 mb-3">
+                        Add, rate, and delete songs by using the dashboard 👇
+                    </p>
+                    <a href="/tracks" class="button is-black is-medium">View Dashboard</a>
+                </div>
+            </div>
         </div>
     </body>
 </html>
