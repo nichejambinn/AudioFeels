@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Search</title>
+</head>
+<body>
+	<h1>Search Tracks</h1>
+	
+	<form th:action="@{/searchTracks}">
+		<input type="text" name="q">
+		<button type="submit">SEARCH</button>
+	</form>
+	
+	<form th:if="${tracks.length > 0}" th:action="@{/}">
+		<table>
+			<tr>
+				<th>Album Art</th>
+				<th>Track Name</th>
+				<th>Artist</th>
+				<th>Album</th>
+				<th>Action</th>
+			</tr>
+			<tr th:each="t : ${tracks}">
+				<td>
+					<img th:src="${t.album.images[2].url}">
+				</td>
+				<td>[[${t.name}]]</td>
+				<td>[[${t.artists[0].name}]]</td>
+				<td>[[${t.album.name}]]</td>
+				<td>
+					<button th:formaction="@{/rateTrack/{id}(id=${t.id})}">RATE</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<br>
+	<br>
+	<a th:href="@{/}">Home</a>
+</body>
+</html>
