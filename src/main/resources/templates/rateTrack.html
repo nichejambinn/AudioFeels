@@ -12,10 +12,10 @@
                 <div class="card-content">
                     <h1 class="title has-text-centered my-5">Rate Track</h1>
 
-                    <form th:action="@{/rateTrack}" method="post" th:object="${track}">
+                    <form th:action="@{/tracks}" method="post" th:object="${track}">
                         <div class="my-5 is-flex is-justify-content-center is-align-items-center">
                             <label for="label" class="is-size-4 mr-3">Label:</label>
-                            <div class="select is-link is-medium" name="label">
+                            <div class="select is-link is-medium">
                                 <select th:field="*{label.id}">
                                     <option
                                         th:if="${track.label == null}"
