@@ -7,21 +7,24 @@
     </head>
     <body>
         <div th:replace="fragments/header :: header"></div>
-        <h1>Data</h1>
-        <div>
-            <h3>Data</h3>
-            <ul>
-                <li th:text="'number of data points: ' + ${numPoints}"></li>
-            </ul>
-            <div>
-                <img
-                    class="img-fluid"
-                    src="#"
-                    alt="Pairwise Plots"
-                    th:src="@{http://localhost:5000/get_image_2}"
-                />
+        <div class="container">
+            <div class="card my-5 mx-auto" style="max-width: 800px !important">
+                <div class="card-content">
+                    <h1 class="title has-text-centered my-5">Data</h1>
+                    <div>
+                        <ul>
+                            <li th:text="'number of data points: ' + ${numPoints}"></li>
+                        </ul>
+                        <div class="has-text-centered">
+                            <img
+                                class="img-fluid"
+                                src="https://moodyjay.herokuapp.com/get_image_2"
+                                alt="Pairwise Plots"
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <a href="#" th:href="@{/}">Home</a>
     </body>
 </html>
