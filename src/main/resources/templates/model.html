@@ -7,22 +7,37 @@
     </head>
     <body>
         <div th:replace="fragments/header :: header"></div>
-        <h1>Analytics</h1>
-        <div>
-            <h3>KNN Classifier</h3>
-            <ul>
-                <li th:text="'test set accuracy: ' + ${accuracy} + '%'"></li>
-                <li th:text="'k: ' + ${k}"></li>
-            </ul>
-            <div>
-                <img
-                    class="img-fluid"
-                    src="#"
-                    alt="Test/Train Performance"
-                    th:src="@{http://localhost:5000/get_image}"
-                />
+        <div class="container">
+            <div class="card mx-auto my-5" style="max-width: 800px !important">
+                <div class="card-content">
+                    <h1 class="title has-text-centered my-5">Analytics</h1>
+                    <div>
+                        <h3 class="is-size-4">KNN Classifier</h3>
+                        <nav class="level mt-5">
+                            <div class="level-item has-text-centered">
+                                <div>
+                                    <p class="heading is-size-5">Test Set Accuracy</p>
+                                    <p class="title" th:text="${accuracy} + '%'"></p>
+                                </div>
+                            </div>
+                            <div class="level-item has-text-centered">
+                                <div>
+                                    <p class="heading is-size-5">K:</p>
+                                    <p class="title" th:text="${k}"></p>
+                                </div>
+                            </div>
+                        </nav>
+
+                        <div class="has-text-centered">
+                            <img
+                                class="img-fluid"
+                                alt="Test/Train Performance"
+                                src="https://moodyjay.herokuapp.com/get_image"
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <a href="#" th:href="@{/}">Home</a>
     </body>
 </html>

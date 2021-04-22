@@ -34,3 +34,8 @@ body {
 .table-image {
     width: 200px;
 }
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
