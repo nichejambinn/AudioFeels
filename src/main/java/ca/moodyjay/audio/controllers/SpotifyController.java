@@ -1,7 +1,5 @@
 package ca.moodyjay.audio.controllers;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
@@ -88,6 +86,8 @@ public class SpotifyController {
 			
 			track = Mapper.mapSpotifyTrackAndAudioFeaturesToTrackBean(trackResponse.block(), audioFeaturesResponse.block());
 		}
+		
+		track.setLabel(null);
 		
 		model.addAttribute("track", track);
 		model.addAttribute("labels", labelRepo.findAll());

@@ -1,6 +1,5 @@
 package ca.moodyjay.audio.utils;
 
-import ca.moodyjay.audio.beans.Label;
 import ca.moodyjay.audio.beans.Track;
 import ca.moodyjay.audio.beans.spotify.AudioFeatures;
 
@@ -15,7 +14,7 @@ public class Mapper {
 				.energy(audioFeatures.getEnergy())
 				.imgUrl(spotifyTrack.getAlbum().getImages()[0].getUrl())
 				.instrumentalness(audioFeatures.getInstrumentalness())
-				.label(new Label())
+				.label(null)
 				.liveness(audioFeatures.getLiveness())
 				.loudness(audioFeatures.getLoudness())
 				.speechiness(audioFeatures.getSpeechiness())

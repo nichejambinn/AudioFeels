@@ -20,10 +20,13 @@
 		<input type="hidden" th:field="*{valence}">
 		<input type="hidden" th:field="*{tempo}">
 		<input type="hidden" th:field="*{imgUrl}">
+		<input type="hidden" th:field="*{trackName}">
+		<input type="hidden" th:field="*{artist}">
+		<input type="hidden" th:field="*{album}">
 		<img th:src="${track.imgUrl}">
-		Track Name: <input type="text" th:field="*{trackName}" disabled><br>
-		Artist: <input type="text" th:field="*{artist}" disabled><br>
-		Album: <input type="text" th:field="*{album}" disabled><br>
+		Track Name: [[${track.trackName}]]<br>
+		Artist: [[${track.artist}]]<br>
+		Album: [[${track.album}]]<br>
 		Label: 
 		<select th:field="*{label.id}">
 	        <option
@@ -43,6 +46,8 @@
 	            th:selected="${track.label == label}"
 	        ></option>
         </select>
+        <br>
+        <button type="submit">SAVE</button>
 	</form>
 	<br>
 	<br>
