@@ -26,3 +26,11 @@ body {
 .container {
     height: 100%;
 }
+
+.table {
+    background-color: transparent !important;
+}
+
+.table-image {
+    width: 200px;
+}
