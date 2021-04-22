@@ -1,32 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-</head>
-<body>
-  <h1>Login</h1>
-  
-  <div th:if="${param.logout}">
-    <span class="alert">You have been logged out</span>
-  </div>
-  <div th:if="${param.error}">
-    <span class="alert">Invalid username or password</span>
-  </div>  
-  <form th:action="@{/login}" method="post">
-    <div>
-      <label for="username">Username: </label>
-      <input type="text" id="username" name="username" autofocus="autofocus" placeholder="Username">
-    </div>
-    <div>
-      <label for="password">Password: </label>
-      <input type="password" id="password" name="password" placeholder="Password">
-    </div>
-    <div>
-      <button type="submit" id="login-submit" name="login-submit">Login</button>
-    </div>
-  </form>
-</body>
+    <head>
+        <meta charset="ISO-8859-1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login</title>
+        <link rel="stylesheet" th:href="@{/css/global.css}" />
+    </head>
+    <body>
+        <div class="container is-flex is-justify-content-center is-align-items-center">
+            <div class="box pb-5" style="width: 50%">
+                <h1 class="title has-text-centered mt-5">Login</h1>
+                <div class="columns is-justify-content-center">
+                    <div class="column is-8">
+                        <form th:action="@{/login}" method="POST">
+                            <div th:if="${param.logout}">
+                                <div class="notification is-warning is-light">
+                                    You have been logged out.
+                                </div>
+                            </div>
+
+                            <div th:if="${param.error}">
+                                <div class="notification is-danger is-light">
+                                    Invalid username or password.
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label" for="username">Username:</label>
+                                <div class="control">
+                                    <input
+                                        class="input"
+                                        type="text"
+                                        placeholder="Username"
+                                        id="username"
+                                        name="username"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label" for="password">Password:</label>
+                                <div class="control">
+                                    <input
+                                        class="input"
+                                        type="password"
+                                        placeholder="Password"
+                                        id="password"
+                                        name="password"
+                                    />
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="button primary-button is-medium is-fullwidth my-5"
+                            >
+                                Login
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
