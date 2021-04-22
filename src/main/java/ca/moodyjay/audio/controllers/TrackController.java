@@ -46,7 +46,17 @@ public class TrackController {
 	}
 	
 	@PostMapping("/tracks")
-	public String addTrack(@ModelAttribute Track track) {
+	public String addTrack(@ModelAttribute Track track, Authentication auth) {
+		Label label = labelRepo.findById(track.getLabel().getId()).get();
+		//Optional<Track> trackQuery = trackRepo.findById(track.getSpotifyId());
+		
+		// assign the label to the track if added by admin
+		if (auth != null && auth.getName().toUpperCase().equals("ADMIN")) {
+			track.setLabel(label);
+		} else {
+			track.setLabel(null);
+		}
+		
 		trackRepo.save(track);
 		
 		return "redirect:/tracks";
@@ -96,7 +106,6 @@ public class TrackController {
 		}
 		
 		// save track in database if not already there
-		track.setLabel(null);
 		if (trackQuery.isPresent()) {
 			track = trackQuery.get();
 		} else {
